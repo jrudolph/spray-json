@@ -1,6 +1,6 @@
 name := "spray-json"
 
-version := "1.2.5"
+version := "1.2.6-SNAPSHOT"
 
 organization := "io.spray"
 
@@ -88,3 +88,13 @@ seq(lsSettings:_*)
 (LsKeys.docsUrl in LsKeys.lsync) := Some(new URL("http://spray.github.com/spray/api/spray-json/"))
 
 (externalResolvers in LsKeys.lsync) := Seq("spray repo" at "http://repo.spray.io")
+
+site.settings
+
+SiteKeys.siteMappings <++= (mappings in packageDoc in Compile, version) map { (m, version) =>
+  for((f, d) <- m) yield (f, version + "/api/" + d)
+}
+
+ghpages.settings
+
+git.remoteRepo := "git@github.com:jrudolph/spray-json.git"
